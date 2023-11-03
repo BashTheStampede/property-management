@@ -21,9 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/")
 public class PropertyController {
-    
-    @Value("${pms.dummpy}")
-    private String dummy;
 
     @Autowired
     private PropertyService propertyService;
@@ -43,7 +40,6 @@ public class PropertyController {
 
     @GetMapping("/properties")
     public ResponseEntity<List<PropertyDTO>> getAllProperties() {
-        System.out.println(dummy);
         List<PropertyDTO> propertyList = propertyService.getAllProperties();
         ResponseEntity<List<PropertyDTO>> responseEntity = new ResponseEntity<>(propertyList, HttpStatus.OK);
 
@@ -78,7 +74,7 @@ public class PropertyController {
     }
 
     @DeleteMapping("/properties/{propertyId}")
-    public ResponseEntity deleteProperty(@PathVariable Long propertyId) {
+    public ResponseEntity<Void> deleteProperty(@PathVariable Long propertyId) {
         propertyService.deleteProperty(propertyId);
         ResponseEntity<Void> responseEntity = new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         return responseEntity;
